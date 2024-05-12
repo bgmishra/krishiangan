@@ -46,7 +46,7 @@ class PageSectionsAdmin(admin.ModelAdmin):
 class PartnerAdmin(admin.ModelAdmin):
     class Meta:
         model = Partner
-    list_display = ('name_en','name_lc', 'url','logo_url','display_order','is_active')
+    list_display = ('name_en','name_lc', 'url','logo_path','display_order','is_active')
     
 class PoweredByAdmin(admin.ModelAdmin):
     class Meta:

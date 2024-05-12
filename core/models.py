@@ -293,12 +293,17 @@ class Staffs(models.Model):
     
 class subscripiton(models.Model):
     email = models.EmailField()
-    
+
+def get_partner_logo_path(instance, filename):
+    try:
+        return "partner_logo/%s/%s" % (instance.name_en,filename)
+    except:
+        return "partner_logo/"    
 class Partner(models.Model):
     name_en = models.CharField(max_length=100)
     name_lc = models.CharField(max_length=100,null=True,blank=True)
     url = models.URLField(blank=True,null=True)
-    logo_url = models.URLField(blank=True,null=True)
+    logo_path = models.ImageField(upload_to=get_partner_logo_path,null=True, blank=True)
     is_active = models.BooleanField(default=True)
     display_order = models.IntegerField(default=0)
 
