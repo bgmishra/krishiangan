@@ -1,0 +1,91 @@
+
+{% extends "account/base.html" %}
+{% load static custom_tags %}
+{% block content %}
+	
+	<main class="bg_gray">
+			<div class="container margin_60_35 add_bottom_30">
+				<div class="main_title">
+					<h2>{{about_us.main_title}}</h2>
+					<p>{{about_us.main_content}}</p>
+				</div>
+
+				{% for section in about_sections %}
+				<div class="row justify-content-center align-items-center">
+					{% if forloop.counter|is_odd %}
+						<div class="col-lg-5">
+							<div class="box_about">
+								<h2>{{section.title}}</h2>
+								<p>{{section.content}}</p>
+								<img src=" {% static 'main/img/arrow_about.png' %} " alt="" class="arrow_1">
+
+							</div>
+						</div>
+						<div class="col-lg-5 pl-lg-5 text-center d-none d-lg-block">
+								<img src="{{section.image.url}}" alt="" class="img-fluid" width="320" height="250">
+						</div>
+					{%else%}
+						<div class="col-lg-5 pr-lg-5 text-center d-none d-lg-block">
+							<img src="{{section.image.url}}" alt="" class="img-fluid" width="320" height="250">
+						</div>
+						<div class="col-lg-5">
+							<div class="box_about">
+								<h2>{{section.title}}</h2>
+								<p>{{section.content}}</p>
+								<img src=" {% static 'main/img/arrow_about.png' %} " alt="" class="arrow_2">
+							</div>
+						</div>	
+					{%endif%}
+				</div>
+				{%endfor%}
+			</div>
+		
+			<div class="bg_white">
+				<div class="container margin_60_35">
+					<div class="main_title">
+						<h2>{{about_us.bottom_title}}</h2>
+						<p>{{about_us.bottom_content}}</p>
+					</div>
+					<div class="row">
+						{%for bsection in bottom_sections%}
+							<div class="col-lg-4 col-md-6">
+								<div class="box_feat">
+									{%if bsection.image %}
+										<img src="{{bsection.image.url}}" width="60px" height="60px"></img>
+									{%else%}
+										<img class="img-fluid lazy" src="/static/main/img/products/product_placeholder_detail.jpg" alt="" style="max-height:60px; min-height:60px;">
+									{%endif%}
+									<h3 class="text-primary">{{bsection.title}}</h3>
+									<p>{{bsection.content}}</p>
+								</div>
+							</div>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		
+		<div class="container margin_60">
+			<div class="main_title">
+				<h2>Meet Krishiangan Staff</h2>
+			</div>
+			<div class="owl-carousel owl-theme carousel_centered">
+				{%for staff in staffs %}
+					<div class="item">
+						<a href="#">
+							<div class="title">
+								<h4>{{staff.name_lc|default:staff.name_en}} <em>{{staff.post_lc|default:staff.post_en}}</em></h4>
+							</div>
+							{%if staff.image %}
+								<img class="img-fluid lazy"  src="{{staff.image.url}}" width="350" height="500px"></img>
+							{%else%}
+								<img class="img-fluid lazy" src="/static/main/img/products/product_placeholder_detail.jpg" alt="" style="max-height:60px; min-height:60px;">
+							{%endif%}
+						</a>
+					</div>
+				{%endfor%}
+			</div>
+			<!-- /carousel -->
+		</div>
+		<!-- /container -->
+	</main>
+{% endblock content %}

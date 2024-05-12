@@ -1,0 +1,57 @@
+{% extends "account/base.html" %}
+{% load  static custom_tags crispy_forms_tags %}
+
+{{ form.media }} {# Adds date-picker required JS and CSS #}
+{% block content %}
+
+<main>
+    <div class="container add_bottom_20">
+        <div class="col s12 m8 offset-m2 pb-3">
+            <div class="card p-2">
+                <div class="card-content">
+
+                    <h2 class="flow-text">Add your item</h2>
+                    {%if item %}
+                        <form id="post_form" method="post" action="/edit/item/{{item.id}}/" enctype="multipart/form-data">
+                     {%else%}   
+                        <form id="post_form" method="post" action="/edit/item/" enctype="multipart/form-data">
+                    {%endif%}
+                        {% csrf_token %}
+                        <div class="form-row margin_20 py-2 px-3">
+                                
+                            {% for pform in postForm %}
+                                    <div>{{ pform|as_crispy_field}}</div>
+                            {%endfor%}
+                        <div class="row px-3"><h5 class="text-primary"> सम्बन्धित फोटोहरु</div>
+                        {%include 'custom_fields/multiple_images.html' %}    
+                        {% for form in formset %} 
+                            <div class="col-md-12 py-2">{{ form|crispy}}</div>
+                        {% endfor %}
+                        </div>
+                        <div class="col-md-2 float-right">
+                            <button class="btn btn-success btn-sm text-right float-right" type="submit" name="submit" value="Submit" /><i class="fa fa-floppy-o"></i> Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock content %}
+
+{%block extra_script %}
+<script src="{% static 'main/js/create_update.js' %} "></script>
+<script>
+    toggleDiscountField();
+
+    function toggleDiscountField(){
+        var checkbox = document.getElementById("id_has_discount");
+        var discountField = document.getElementById("id_discount_price");
+
+        // Enable or disable the field based on the checkbox state
+        discountField.disabled = !checkbox.checked;
+    }
+</script>
+{%endblock%}
